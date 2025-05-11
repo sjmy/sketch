@@ -1,24 +1,61 @@
+const button = document.querySelector(".button");
 const container = document.querySelector(".container");
 
-for (r = 0; r < 16; r++) {
-    const newRow = document.createElement("div");
-    newRow.classList.add("row");
-    let rowHeight = 100 / 16;
-    newRow.style.height = `${rowHeight}%`
-    container.appendChild(newRow);
+// Creates new grid given a side length
+function createGrid(sideLength) {
+    for (r = 0; r < sideLength; r++) {
+        const newRow = document.createElement("div");
+        newRow.classList.add("row");
+        let rowHeight = 100 / sideLength;
+        newRow.style.height = `${rowHeight}%`;
+        container.appendChild(newRow);
 
-    for (s = 0; s < 16; s++) {
-       const newSquare = document.createElement("div");
-        newSquare.classList.add("square");
-        let sideWidth = 100 / 16;
-        newSquare.style.width = `${sideWidth}%`
-        newRow.appendChild(newSquare);
+        for (s = 0; s < sideLength; s++) {
+        const newSquare = document.createElement("div");
+            newSquare.classList.add("square");
+            let squareSide = 100 / sideLength;
+            newSquare.style.width = `${squareSide}%`;
+            newRow.appendChild(newSquare);
+        };
     };
 };
 
-const square = document.querySelector(".square");
+//Removes existing grid
+function removeGrid() {
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    };
+};
 
-square.addEventListener("mouseover", (e) => {
-    let target = e.target;
-    target.style.backgroundColor = "blue";
+// Generates random hexadecimal colour
+function getNewColor() {
+    let symbols = "0123456789ABCDEF";
+    let color = "#";
+
+    for (n = 0; n < 6; n++) {
+        color += symbols[Math.floor(Math.random() * 16)];
+    };
+
+    return color;
+};
+
+
+// Initial grid size
+createGrid(16);
+
+// Choose a grid size between 1 and 100 by clicking on the button
+button.addEventListener("click", (e) => {
+    let sideLength = prompt("How many squares per side? Max 100.");
+
+    while (sideLength < 1 || sideLength > 100) {
+        sideLength = prompt("Please choose a number between 1 and 100.")
+    };
+
+    removeGrid();
+    createGrid(sideLength);
+});
+
+// Change background colour of each square when moused over
+container.addEventListener("mouseover", (e) => {
+    e.target.style.backgroundColor = getNewColor();
 });

@@ -1,6 +1,17 @@
+html, body {
+    height: 95%;
+}
+
+.button {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .container {
-    height: 500px;
-    width: 500px;
+    height: 95%;
+    aspect-ratio: 1/1;
+    margin: auto;
 }
 
 .row {
